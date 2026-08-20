@@ -1,0 +1,37 @@
+project:
+  seed: 20260814
+  output_dir: reports/artifacts/synthetic_baseline
+  log_level: INFO
+
+synthetic:
+  n_samples: 5000
+  start_probabilities: [0.60, 0.25, 0.15]
+  transition_matrix:
+    - [0.970, 0.025, 0.005]
+    - [0.030, 0.940, 0.030]
+    - [0.010, 0.040, 0.950]
+  means:
+    - [-3.0, 0.0]
+    - [0.0, 3.0]
+    - [3.0, -1.0]
+  covariances:
+    - [[0.50, 0.10], [0.10, 0.40]]
+    - [[0.70, -0.12], [-0.12, 0.60]]
+    - [[0.45, 0.00], [0.00, 0.55]]
+
+model:
+  n_states: 3
+  covariance_type: full
+  n_iter: 300
+  tolerance: 0.0001
+  min_covar: 0.0001
+  seeds: [11, 23, 37, 53, 71, 89]
+
+validation:
+  transition_tolerance: 2
+  max_mean_rmse: 0.35
+  max_covariance_relative_error: 0.35
+  max_transition_mae: 0.035
+  min_filtered_accuracy: 0.90
+  min_boundary_f1: 0.70
+

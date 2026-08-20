@@ -1,0 +1,16 @@
+project:
+  output_dir: reports/artifacts/adaptive_forecast
+  log_level: INFO
+
+source:
+  real_config: configs/real_data_diagnostic.yaml
+  test_start: 2022-01-03
+
+forecast:
+  horizons: [1, 5, 21]
+  initial_epochs: 20
+  random_seed: 20260818
+  learning_rate: 0.002
+  regularization: 0.001
+  target_multiplier: 100.0
+  rolling_metric_window: 126
