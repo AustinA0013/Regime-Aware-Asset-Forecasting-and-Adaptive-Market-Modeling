@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "market-regimes"
+version = "0.1.0"
+description = "Causal latent market-regime inference and validation research platform"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "hmmlearn>=0.3.3,<0.4",
+  "joblib>=1.4,<2",
+  "matplotlib>=3.9,<4",
+  "numpy>=1.26,<2.5",
+  "pandas>=2.2,<3",
+  "PyYAML>=6.0,<7",
+  "scikit-learn>=1.5,<2",
+  "scipy>=1.13,<2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9",
+  "pytest-cov>=6,<7",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+market-regimes-synthetic = "market_regimes.experiment:main"
+market-regimes-real = "market_regimes.real_experiment:main"
+market-regimes-adaptive = "market_regimes.adaptive_experiment:main"
+market-regimes-assets = "market_regimes.asset_experiment:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+market_regimes = ["py.typed"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "recovery: end-to-end statistical recovery test",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]

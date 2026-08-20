@@ -1,0 +1,58 @@
+project:
+  output_dir: reports/artifacts/asset_forecast
+  log_level: INFO
+
+source:
+  real_config: configs/real_data_diagnostic.yaml
+
+data:
+  provider: yahoo_chart
+  start: 2016-08-15
+  end: latest
+  cache_dir: data/raw/assets/yahoo_chart
+  benchmark: SPY
+  tickers: [SPY, QQQ, IWM, AAPL, MSFT, NVDA, AMZN, GOOGL, META]
+  timeout_seconds: 30
+
+features:
+  volatility_windows: [5, 20, 60]
+  momentum_windows: [5, 20, 60, 120]
+  drawdown_window: 252
+  relative_strength_windows: [20, 60, 120]
+  beta_window: 60
+  correlation_window: 60
+  volume_window: 20
+  volume_change_window: 5
+  annualization_factor: 252
+
+forecast:
+  horizons: [1, 5, 21]
+  initial_epochs: 20
+  random_seed: 20260820
+  learning_rate: 0.002
+  regularization: 0.001
+  target_multiplier: 100.0
+  min_initial_samples: 250
+  rolling_metric_window: 126
+
+evaluation:
+  folds:
+    - id: "2022_2023"
+      train_end: 2021-12-31
+      test_start: 2022-01-03
+      test_end: 2023-12-29
+    - id: "2024_2025"
+      train_end: 2023-12-29
+      test_start: 2024-01-02
+      test_end: 2025-12-31
+    - id: 2026_live
+      train_end: 2025-12-31
+      test_start: 2026-01-02
+      test_end: latest
+  top_k: 3
+  min_cross_sectional_assets: 5
+
+statistics:
+  min_state_samples: 60
+  bootstrap_samples: 200
+  bootstrap_block_length: 20

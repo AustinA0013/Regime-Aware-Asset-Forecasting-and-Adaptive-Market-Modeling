@@ -1,0 +1,44 @@
+project:
+  seed: 20260816
+  output_dir: reports/artifacts/real_data_diagnostic
+  log_level: INFO
+
+data:
+  start: 2016-08-15
+  # "latest" resolves to today's date in America/New_York on every run.
+  # FRED returns the most recent observation available on or before that date.
+  end: latest
+  train_end: 2021-12-31
+  cache_dir: data/raw/fred
+  allow_latest_vintage: true
+  series:
+    price: SP500
+    vix: VIXCLS
+    treasury_10y: DGS10
+    treasury_2y: DGS2
+    credit_spread: BAA10Y
+  availability_lag_days:
+    SP500: 0
+    VIXCLS: 1
+    DGS10: 1
+    DGS2: 1
+    BAA10Y: 1
+  max_staleness_days:
+    VIXCLS: 4
+    DGS10: 7
+    DGS2: 7
+    BAA10Y: 7
+
+features:
+  realized_volatility_windows: [5, 20]
+  momentum_windows: [20, 60]
+  drawdown_window: 252
+  annualization_factor: 252
+
+model:
+  n_states: 3
+  covariance_type: diag
+  n_iter: 500
+  tolerance: 0.0001
+  min_covar: 0.0001
+  seeds: [11, 23, 37, 53, 71, 89]
